@@ -1,6 +1,7 @@
 
 ////////////////////////////////Starting Game
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', 
+    { preload: preload, create: create, update: update });
 
 /////////////////////////////// LOAD GAME ASSETS
 function preload() {  
@@ -14,7 +15,7 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //  A simple background for our game
-    game.add.sprite(0, 0, 'sky');
+    game.add.sprite(0, 0, 'BACKGROUNDASSET');
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = game.add.group();
