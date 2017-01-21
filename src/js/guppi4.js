@@ -66,7 +66,7 @@ var mainState = {
 
         for (var i = 0; i < this.points.length; i++)
         {
-            this.points[i].y = Math.sin(i * 0.5 + count) * 60;
+            this.points[i].y = Math.sin(i * 0.5 + count) * 20;
         }
 
         // making lots of waves
@@ -98,7 +98,7 @@ var mainState = {
         if (this.guppi.y < 0 || this.guppi.y > game.world.height)
             this.restartGame(); 
 
-       // game.physics.arcade.overlap(this.guppi, this.pipes, this.hitPipe, null, this); 
+        game.physics.arcade.overlap(this.guppi, this.waves, this.hitWaves, null, this); 
             
         // Slowly rotate the bird downward, up to a certain point.
         if (this.guppi.angle < 20)
