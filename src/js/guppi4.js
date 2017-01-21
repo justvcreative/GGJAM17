@@ -1,5 +1,10 @@
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, "gameDiv");
 
+var rope;
+var debugKey;
+var shouldDebug = false;
+var waves;
+
 var mainState = {
 
     preload: function() { 
@@ -17,15 +22,16 @@ var mainState = {
         game.load.image('pipe', 'src/assets/pipe.png'); 
 
         // Load the jump sound
-        game.load.audio('jump', 'src/assets/jump.wav'); 
+        game.load.audio('jump', 'src/assets/jump.wav');
+
+        // making a wave
+        game.load.image('wave', 'src/assets/wave.png'); 
     },
 
     create: function() { 
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-      //  this.pipes = game.add.group();
-      //  this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);           
-
+      
         this.guppi = game.add.sprite(100, 245, 'guppi');
         game.physics.arcade.enable(this.guppi);
         this.guppi.body.gravity.y = 1000; 
@@ -43,6 +49,49 @@ var mainState = {
         // Add the jump sound
         this.jumpSound = game.add.audio('jump');
         this.jumpSound.volume = 0.2;
+
+        // making a wave
+        var count = 0;
+        var length = 918 / 20;
+        var points = [];
+
+        for (var i = 0; i < 20; i++){
+            points.push(new Phaser.Point(i * length, 0));
+        }
+        rope = game.add.rope(32, this.game.world.centerY, 'wave', null, points);
+        rope.scale.set(1.5);
+
+        rope.updateAnimation = function() {
+        count += 0.1;
+
+        for (var i = 0; i < this.points.length; i++)
+        {
+            this.points[i].y = Math.sin(i * 0.5 + count) * 60;
+        }
+
+        // making lots of waves
+        waves = game.add.group();
+        waves.enableBody = true;
+        // how big is yo wave
+        waves.scale.setTo();
+
+
+    };
+
+    debugKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
+    debugKey.onDown.add(toggleDebug);
+
+
+    },
+    render: function() {
+        if (shouldDebug){
+            game.debug.ropeSegments(rope);
+        }
+        game.debug.text('(D) to show debug', 20, 32);
+    },
+
+    toggleDebug: function() {
+        shouldDebug = !shouldDebug;
     },
 
     update: function() {
@@ -54,6 +103,9 @@ var mainState = {
         // Slowly rotate the bird downward, up to a certain point.
         if (this.guppi.angle < 20)
             this.guppi.angle += 1;  
+
+        //collide with waves
+        var hitWaves = game.physics.arcade.collide(this.guppi, waves);
     },
 
     jump: function() {
