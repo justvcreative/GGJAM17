@@ -18,3 +18,13 @@ Gupi is a game about a little alien that lands in the ocean and gets its start i
 * Friendly Alien 
 * Death Scene 
 * Levels
+
+### Credits
+
+##### Design
+* Veronica Rivera [@justvcreative](http://twitter.com/justvcreative)
+* Roberto Rivera [@Th3ba1r0n](http://twitter.com/Th3ba1r0n)
+
+##### Development
+* Alicia Sims [@alikeebee](http://twitter.com/alikeebee)
+* Veronica Rivera [@justvcreative](http://twitter.com/justvcreative)
