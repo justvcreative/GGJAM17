@@ -19,15 +19,14 @@ var mainState = {
         game.stage.backgroundColor = '#6fe0d7';
 
         game.load.image('background', 'src/assets/background.png');
-
         game.load.image('guppi', 'src/assets/guppi.png');  
         game.load.image('ground', 'src/assets/pipe.png'); 
 
         // Load the jump sound
         game.load.audio('jump', 'src/assets/jump.wav');
 
-        // making a wave
-        game.load.image('wave', 'src/assets/wave.png'); 
+        // making a snake
+        game.load.image('snake', 'src/assets/snake.png'); 
     },
 
     create: function() { 
@@ -41,9 +40,12 @@ var mainState = {
 
         this.guppi = game.add.sprite(100, 245,'guppi');
         game.physics.arcade.enable(this.guppi);
+
         this.guppi.body.gravity.y = 500; 
         this.guppi.collideWorldBounds = true;
         this.guppi.body.velocity.x = 0;
+        this.guppi.scale.setTo(0.5);
+
 
         // New anchor position
         this.guppi.anchor.setTo(-0.2, 0.5); 
@@ -83,7 +85,7 @@ var mainState = {
         for (var i = 0; i < 20; i++){
             points.push(new Phaser.Point(i * length, 0));
         }
-        rope = game.add.rope(32, this.game.world.centerY, 'wave', null, points);
+        rope = game.add.rope(138, this.game.world.centerY, 'snake', null, points);
         rope.scale.set(0.5);
 
         rope.updateAnimation = function() {
@@ -95,10 +97,10 @@ var mainState = {
         }
 
         // making lots of waves
-        waves = game.add.group();
-        waves.enableBody = true;
+        snakes = game.add.group();
+        snakes.enableBody = true;
         // how big is yo wave
-        waves.scale.setTo();
+        snakes.scale.setTo();
 
         
 
@@ -121,7 +123,7 @@ var mainState = {
     },
 
     update: function() {
-       game.physics.arcade.collide(this.guppi, this.wave, collisionHandler, null, this); 
+       game.physics.arcade.collide(this.guppi, this.snake, collisionHandler, null, this); 
             
         // Slowly rotate the bird downward, up to a certain point.
         if (this.guppi.angle < 20)
