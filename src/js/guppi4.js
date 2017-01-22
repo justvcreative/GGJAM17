@@ -40,7 +40,7 @@ var mainState = {
         game.physics.arcade.enable(this.guppi);
         this.guppi.body.bounce.y = 0.6;
         this.guppi.body.gravity.y = 500; 
-        this.guppi.collideWorldBounds = true;
+        this.guppi.body.collideWorldBounds = true;
         this.guppi.body.velocity.x = 0;
         this.guppi.scale.setTo(0.5);
 
@@ -71,16 +71,18 @@ var mainState = {
         game.add.tileSprite(0,656,1280,64, 'sand');
 
         var ground = platforms.create(0, game.world.height -64);
-        ground.scale.setTo(30,40);
+        ground.scale.setTo(80,30);
 
         ground.body.immovable = true;
+
+
 
         // making food
         burgers = game.add.group();
         burgers.enableBody = true;
 
-        for (var bv = 0; bv < 10; bv++ ){
-            var burger = burgers.create(bv * 100, Math.random(), 'burger');
+        for (var bv = 0; bv < 12; bv++ ){
+            var burger = burgers.create(bv * 150, Math.random(), 'burger');
             burger.body.gravity.y = 9;
             burger.body.bounce.y = 0.7 + Math.random() * 0.2;
             burger.scale.setTo(Math.random());
