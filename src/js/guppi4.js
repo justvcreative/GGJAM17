@@ -21,7 +21,7 @@ var mainState = {
         game.load.image('background', 'src/assets/background.png');
 
         game.load.image('guppi', 'src/assets/guppi.png');  
-        game.load.image('pipe', 'src/assets/pipe.png'); 
+        game.load.image('ground', 'src/assets/pipe.png'); 
 
         // Load the jump sound
         game.load.audio('jump', 'src/assets/jump.wav');
@@ -42,6 +42,7 @@ var mainState = {
         this.guppi = game.add.sprite(100, 245, 'guppi');
         game.physics.arcade.enable(this.guppi);
         this.guppi.body.gravity.y = 1000; 
+        this.guppi.collideWorldBounds = true;
 
         // New anchor position
         this.guppi.anchor.setTo(-0.2, 0.5); 
@@ -57,6 +58,18 @@ var mainState = {
         this.jumpSound = game.add.audio('jump');
         this.jumpSound.volume = 0.2;
 
+        // Forming a ground or platforms
+
+        platforms = game.add.group();
+        platforms.enableBody = true;
+
+
+        var ground = platforms.create(0, game.world.height -64, 'ground');
+        ground.scale.setTo(30,10);
+
+        ground.body.immovable = true;
+
+
         // making a wave
         var count = 0;
         var length = 918 / 20;
@@ -66,7 +79,7 @@ var mainState = {
             points.push(new Phaser.Point(i * length, 0));
         }
         rope = game.add.rope(32, this.game.world.centerY, 'wave', null, points);
-        rope.scale.set(1.5);
+        rope.scale.set(0.5);
 
         rope.updateAnimation = function() {
         count += 0.1;
@@ -103,17 +116,17 @@ var mainState = {
     },
 
     update: function() {
-        if (this.guppi.y < 0 || this.guppi.y > game.world.height)
-            this.restartGame(); 
-
        game.physics.arcade.collide(this.guppi, this.wave, collisionHandler, null, this); 
             
         // Slowly rotate the bird downward, up to a certain point.
         if (this.guppi.angle < 20)
             this.guppi.angle += 1;  
 
+        // collide with ground or platforms
+        var hitPlatforms = game.physics.arcade.collide(this.guppi, platforms);
+
         //collide with waves
-        // var hitWaves = game.physics.arcade.collide(this.guppi, waves);
+        var hitWaves = game.physics.arcade.collide(this.guppi, waves);
     },
 
     jump: function() {
