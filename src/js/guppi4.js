@@ -18,14 +18,13 @@ var mainState = {
 
         game.stage.backgroundColor = '#6fe0d7';
 
-        game.load.image('guppi', 'src/assets/guppi.png');  
-        game.load.image('pipe', 'src/assets/pipe.png'); 
+        game.load.image('guppi', 'src/assets/guppi.png');
 
         // Load the jump sound
         game.load.audio('jump', 'src/assets/jump.wav');
 
-        // making a wave
-        game.load.image('wave', 'src/assets/wave.png'); 
+        // making a snake
+        game.load.image('snake', 'src/assets/snake.png'); 
     },
 
     create: function() { 
@@ -36,7 +35,8 @@ var mainState = {
 
         this.guppi = game.add.sprite(100, 245, 'guppi');
         game.physics.arcade.enable(this.guppi);
-        this.guppi.body.gravity.y = 1000; 
+        this.guppi.body.gravity.y = 1000;
+        this.guppi.scale.setTo(0.5);
 
         // New anchor position
         this.guppi.anchor.setTo(-0.2, 0.5); 
@@ -60,8 +60,8 @@ var mainState = {
         for (var i = 0; i < 20; i++){
             points.push(new Phaser.Point(i * length, 0));
         }
-        rope = game.add.rope(32, this.game.world.centerY, 'wave', null, points);
-        rope.scale.set(1.5);
+        rope = game.add.rope(138, this.game.world.centerY, 'snake', null, points);
+        rope.scale.set(0.5);
 
         rope.updateAnimation = function() {
         count += 0.1;
