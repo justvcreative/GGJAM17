@@ -81,8 +81,8 @@ var mainState = {
         burgers = game.add.group();
         burgers.enableBody = true;
 
-        for (var bv = 0; bv < 12; bv++ ){
-            var burger = burgers.create(bv * 150, Math.random(), 'burger');
+        for (var bv = 0; bv < 10; bv++ ){
+            var burger = burgers.create(bv * 100, Math.random(), 'burger');
             burger.body.gravity.y = 9;
             burger.body.bounce.y = 0.7 + Math.random() * 0.2;
             burger.scale.setTo(Math.random() + .25);
