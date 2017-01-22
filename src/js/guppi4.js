@@ -1,9 +1,5 @@
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, "gameDiv");
 
-var rope;
-var debugKey;
-var shouldDebug = false;
-var waves;
 
 var mainState = {
 
@@ -21,7 +17,7 @@ var mainState = {
         game.load.image('background', 'src/assets/background.png');
         game.load.image('guppi', 'src/assets/guppi.png');  
         game.load.image('ground', 'src/assets/pipe.png'); 
-
+        game.load.image('burger', 'src/assets/Burger.png');
         // Load the jump sound
         game.load.audio('jump', 'src/assets/jump.wav');
 
@@ -76,16 +72,28 @@ var mainState = {
 
         ground.body.immovable = true;
 
+        // making food
+        burgers = game.add.group();
+        burgers.enableBody = true;
 
+        for (var bv = 0; bv < 10; bv++ ){
+            var burger = burgers.create(bv * 100, Math.random(), 'burger');
+            burger.body.gravity.y = 9;
+            burger.body.bounce.y = 0.7 + Math.random() * 0.2;
+             if (burger.angle < 20){
+                 burger.angle += 1;  
+                 }
+        }
+       
         // making a wave
         var count = 0;
         var length = 918 / 20;
         var points = [];
 
-        for (var i = 0; i < 20; i++){
+        for (var i = 0; i < 30; i++){
             points.push(new Phaser.Point(i * length, 0));
         }
-        rope = game.add.rope(138, this.game.world.centerY, 'snake', null, points);
+        rope = game.add.rope(50, this.game.world.centerY, 'snake', null, points);
         rope.scale.set(0.5);
 
         rope.updateAnimation = function() {
@@ -101,25 +109,13 @@ var mainState = {
         snakes.enableBody = true;
         // how big is yo wave
         snakes.scale.setTo();
-
-        
-
     };
 
-    debugKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
-    debugKey.onDown.add(toggleDebug);
 
 
     },
     render: function() {
-        if (shouldDebug){
-            game.debug.ropeSegments(rope);
-        }
-        game.debug.text('(D) to show debug', 20, 32);
-    },
-
-    toggleDebug: function() {
-        shouldDebug = !shouldDebug;
+        
     },
 
     update: function() {
@@ -134,6 +130,10 @@ var mainState = {
 
         //collide with waves
         // var hitWaves = game.physics.arcade.collide(this.guppi, waves);
+
+        //burger collisions
+        game.physics.arcade.collide(burgers, platforms);
+        game.physics.arcade.overlap(this.guppi, burgers, collectBurgers, null, this);
 
         //cursors as keyboard
         if (cursors.left.isDown){
@@ -165,9 +165,13 @@ var mainState = {
 
 };
 
-function collisionHandler(){
-    this.guppi.kill();
-};
+function collisionHandler(guppi, snake){
+    guppi.kill();
+}
+
+function collectBurgers (guppi, burger) {
+    burger.kill();
+}
 
 game.state.add('main', mainState);  
 game.state.start('main'); 
