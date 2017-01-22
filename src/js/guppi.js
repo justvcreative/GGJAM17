@@ -56,7 +56,7 @@ var mainState = {
 
         // score
         
-        scoreText = game.add.text(370, 20, 'Nom or Be Nommed', { font: "60px Arial", fill: "#ffffff" });  
+        scoreText = game.add.text(60, 20, 'Nom or Be Nommed', { font: "60px Arial", fill: "#ffffff" });  
 
         // Add the jump sound
         this.jumpSound = game.add.audio('jump');
@@ -183,7 +183,7 @@ var winState = {
     
     create: function(){
         game.add.tileSprite(0,0,1280,720, 'winImage');
-        var startLabel = game.add.text(80, 600, 'Press \'W\' to Play Again', {font: '50px Arial', fill: '#ffffff'});
+        var startLabel = game.add.text(80, 625, 'Press \'W\' to Play Again', {font: '50px Arial', fill: '#ffffff'});
         var wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
         wKey.onDown.addOnce(this.restart, this)
     },
