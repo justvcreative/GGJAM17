@@ -19,6 +19,7 @@ var mainState = {
         game.load.image('guppi', 'src/assets/guppi.png');  
         game.load.image('ground', 'src/assets/pipe.png'); 
         game.load.image('burger', 'src/assets/Burger.png');
+        game.load.image('sand', 'src/assets/sand.png');
         // Load the jump sound
         game.load.audio('jump', 'src/assets/jump.wav');
 
@@ -37,7 +38,7 @@ var mainState = {
 
         this.guppi = game.add.sprite(100, 245,'guppi');
         game.physics.arcade.enable(this.guppi);
-
+        this.guppi.body.bounce.y = 0.6;
         this.guppi.body.gravity.y = 500; 
         this.guppi.collideWorldBounds = true;
         this.guppi.body.velocity.x = 0;
@@ -67,9 +68,10 @@ var mainState = {
         platforms = game.add.group();
         platforms.enableBody = true;
 
+        game.add.tileSprite(0,656,1280,64, 'sand');
 
-        var ground = platforms.create(0, game.world.height -64, 'ground');
-        ground.scale.setTo(30,10);
+        var ground = platforms.create(0, game.world.height -64);
+        ground.scale.setTo(30,40);
 
         ground.body.immovable = true;
 
@@ -92,7 +94,7 @@ var mainState = {
          // making lots of waves
         ropes = game.add.group();
         ropes.enableBody = true;
-        
+
 
         var count = 0;
         var length = 918 / 20;
