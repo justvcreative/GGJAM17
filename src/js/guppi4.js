@@ -39,18 +39,23 @@ var mainState = {
         //trying to define guppi with no luck
         var guppi = this.guppi;
 
-        this.guppi = game.add.sprite(100, 245, 'guppi');
+        this.guppi = game.add.sprite(100, 245,'guppi');
         game.physics.arcade.enable(this.guppi);
-        this.guppi.body.gravity.y = 1000; 
+        this.guppi.body.gravity.y = 500; 
         this.guppi.collideWorldBounds = true;
+        this.guppi.body.velocity.x = 0;
 
         // New anchor position
         this.guppi.anchor.setTo(-0.2, 0.5); 
  
+        // set keyboard inputs
         var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this); 
         game.input.onDown.add(this.jump, this);
+        cursors = game.input.keyboard.createCursorKeys();
 
+
+        // score
         this.score = 0;
         this.labelScore = game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });  
 
@@ -126,7 +131,15 @@ var mainState = {
         var hitPlatforms = game.physics.arcade.collide(this.guppi, platforms);
 
         //collide with waves
-        var hitWaves = game.physics.arcade.collide(this.guppi, waves);
+        // var hitWaves = game.physics.arcade.collide(this.guppi, waves);
+
+        //cursors as keyboard
+        if (cursors.left.isDown){
+            this.guppi.body.velocity.x = -150;
+        }
+        else if (cursors.right.isDown){ 
+            this.guppi.body.velocity.x = 150;
+        }
     },
 
     jump: function() {
