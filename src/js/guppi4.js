@@ -1,6 +1,7 @@
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, "gameDiv");
 var score = 0;
 var scoreText;
+var rope;
 var mainState = {
 
     preload: function() { 
@@ -87,6 +88,12 @@ var mainState = {
         }
        
         // making a wave
+
+         // making lots of waves
+        ropes = game.add.group();
+        ropes.enableBody = true;
+        
+
         var count = 0;
         var length = 918 / 20;
         var points = [];
@@ -94,7 +101,8 @@ var mainState = {
         for (var i = 0; i < 30; i++){
             points.push(new Phaser.Point(i * length, 0));
         }
-        let rope = game.add.rope(50, this.game.world.centerY, 'snake', null, points);
+        rope = game.add.rope(50, this.game.world.centerY, 'snake', null, points);
+        rope.enableBody = true;
         rope.scale.set(0.5);
 
         rope.updateAnimation = function() {
@@ -105,11 +113,8 @@ var mainState = {
             this.points[i].y = Math.sin(i * 0.5 + count) * 60;
         }
 
-        // making lots of waves
-        snakes = game.add.group();
-        snakes.enableBody = true;
-        // how big is yo wave
-        snakes.scale.setTo();
+       
+ 
     };
 
 
@@ -120,7 +125,7 @@ var mainState = {
     },
 
     update: function() {
-       game.physics.arcade.collide(this.guppi, this.snake, collisionHandler, null, this); 
+        game.physics.arcade.collide(this.guppi, rope, collisionHandler, null, this); 
             
         // Slowly rotate the bird downward, up to a certain point.
         if (this.guppi.angle < 20)
@@ -166,7 +171,8 @@ var mainState = {
 
 };
 
-function collisionHandler(guppi, wave){
+function collisionHandler(guppi, rope){
+    console.log('you got hit!');
     guppi.kill();
 }
 
