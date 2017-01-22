@@ -31,7 +31,9 @@ var mainState = {
     create: function() { 
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-      
+        //trying to define guppi with no luck
+        var guppi = this.guppi;
+
         this.guppi = game.add.sprite(100, 245, 'guppi');
         game.physics.arcade.enable(this.guppi);
         this.guppi.body.gravity.y = 1000; 
@@ -98,14 +100,14 @@ var mainState = {
         if (this.guppi.y < 0 || this.guppi.y > game.world.height)
             this.restartGame(); 
 
-       // game.physics.arcade.overlap(this.guppi, this.pipes, this.hitPipe, null, this); 
+       game.physics.arcade.collide(this.guppi, this.wave, collisionHandler, null, this); 
             
         // Slowly rotate the bird downward, up to a certain point.
         if (this.guppi.angle < 20)
             this.guppi.angle += 1;  
 
         //collide with waves
-        var hitWaves = game.physics.arcade.collide(this.guppi, waves);
+        // var hitWaves = game.physics.arcade.collide(this.guppi, waves);
     },
 
     jump: function() {
@@ -127,6 +129,10 @@ var mainState = {
     },
 
 
+};
+
+function collisionHandler(){
+    this.guppi.kill();
 };
 
 game.state.add('main', mainState);  
