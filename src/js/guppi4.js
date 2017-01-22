@@ -1,6 +1,6 @@
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, "gameDiv");
-
-
+var score = 0;
+var scoreText;
 var mainState = {
 
     preload: function() { 
@@ -54,8 +54,8 @@ var mainState = {
 
 
         // score
-        this.score = 0;
-        this.labelScore = game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });  
+        
+        scoreText = game.add.text(370, 20, 'Nom or Be Nommed', { font: "60px Arial", fill: "#ffffff" });  
 
         // Add the jump sound
         this.jumpSound = game.add.audio('jump');
@@ -172,6 +172,9 @@ function collisionHandler(guppi, wave){
 
 function collectBurgers (guppi, burger) {
     burger.kill();
+    score += 1;
+    scoreText.text = 'Noms: ' + score;
+
 }
 
 game.state.add('main', mainState);  
