@@ -24,7 +24,7 @@ var mainState = {
         game.load.audio('jump', 'src/assets/jump.wav');
 
         // making a snake
-        game.load.image('snake', 'src/assets/snake.png'); 
+        game.load.image('rope', 'src/assets/snake.png'); 
     },
 
     create: function() { 
@@ -105,7 +105,9 @@ var mainState = {
         for (var i = 0; i < 30; i++){
             points.push(new Phaser.Point(i * length, 0));
         }
-        rope = game.add.rope(50, this.game.world.centerY, 'snake', null, points);
+        rope = game.add.rope(50, this.game.world.centerY, 'rope', null, points);
+        ropes.physicsBodyType = Phaser.Physics.ARCADE;
+        rope.physicsBodyType = Phaser.Physics.ARCADE;
         rope.enableBody = true;
         rope.scale.set(0.5);
 
