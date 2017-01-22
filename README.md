@@ -1,5 +1,7 @@
 # Guppi
-A Game Jam Project for Global Game Jam 2017
+A Game Jam Project for Global Game Jam 2017.
+
+[Play Now](https://justvcreative.github.io/Guppi/)
 
 ### How to Play: 
 Spacebar and arrow keys. 
