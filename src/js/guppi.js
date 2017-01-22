@@ -24,7 +24,7 @@ var mainState = {
         game.load.audio('jump', 'src/assets/jump.wav');
 
         // making a snake
-        game.load.image('snake', 'src/assets/snake.png'); 
+        game.load.image('rope', 'src/assets/snake.png'); 
     },
 
     create: function() {
@@ -40,7 +40,7 @@ var mainState = {
         game.physics.arcade.enable(this.guppi);
         this.guppi.body.bounce.y = 0.6;
         this.guppi.body.gravity.y = 500; 
-        this.guppi.collideWorldBounds = true;
+        this.guppi.body.collideWorldBounds = true;
         this.guppi.body.velocity.x = 0;
         this.guppi.scale.setTo(0.5);
 
@@ -71,9 +71,11 @@ var mainState = {
         game.add.tileSprite(0,656,1280,64, 'sand');
 
         var ground = platforms.create(0, game.world.height -64);
-        ground.scale.setTo(30,40);
+        ground.scale.setTo(80,30);
 
         ground.body.immovable = true;
+
+
 
         // making food
         burgers = game.add.group();
@@ -103,7 +105,9 @@ var mainState = {
         for (var i = 0; i < 30; i++){
             points.push(new Phaser.Point(i * length, 0));
         }
-        rope = game.add.rope(50, this.game.world.centerY, 'snake', null, points);
+        rope = game.add.rope(50, this.game.world.centerY, 'rope', null, points);
+        ropes.physicsBodyType = Phaser.Physics.ARCADE;
+        rope.physicsBodyType = Phaser.Physics.ARCADE;
         rope.enableBody = true;
         rope.scale.set(0.5);
 
