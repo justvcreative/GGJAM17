@@ -27,7 +27,7 @@ var mainState = {
         game.load.image('rope', 'src/assets/snake.png'); 
     },
 
-    create: function() { 
+    create: function() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         //background image
@@ -85,7 +85,7 @@ var mainState = {
             var burger = burgers.create(bv * 150, Math.random(), 'burger');
             burger.body.gravity.y = 9;
             burger.body.bounce.y = 0.7 + Math.random() * 0.2;
-            burger.scale.setTo(Math.random());
+            burger.scale.setTo(Math.random() + .25);
              if (burger.angle < 20){
                  burger.angle += 1;  
                  }
@@ -154,6 +154,11 @@ var mainState = {
         else if (cursors.right.isDown){ 
             this.guppi.body.velocity.x = 150;
         }
+        
+        //win
+        if (score === 10) {
+            game.state.start('win');
+        }
     },
 
     jump: function() {
@@ -174,8 +179,25 @@ var mainState = {
         game.state.start('main');
     },
 
+}
 
-};
+var winState = {
+    
+    preload: function(){
+        game.load.image('winImage', 'src/assets/win.png');
+    },
+    
+    create: function(){
+        game.add.tileSprite(0,0,1280,720, 'winImage');
+        var startLabel = game.add.text(80, 600, 'Press \'W\' to Play Again', {font: '50px Arial', fill: '#ffffff'});
+        var wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+        wKey.onDown.addOnce(this.restart, this)
+    },
+    restart: function(){
+        score = 0;
+        game.state.start('main');
+    }
+}
 
 function collisionHandler(guppi, rope){
     console.log('you got hit!');
@@ -186,8 +208,10 @@ function collectBurgers (guppi, burger) {
     burger.kill();
     score += 1;
     scoreText.text = 'Noms: ' + score;
+    console.log(score);
 
 }
 
-game.state.add('main', mainState);  
+game.state.add('main', mainState);
+game.state.add('win', winState);
 game.state.start('main'); 
