@@ -18,6 +18,8 @@ var mainState = {
 
         game.stage.backgroundColor = '#6fe0d7';
 
+        game.load.image('background', 'src/assets/background.png');
+
         game.load.image('guppi', 'src/assets/guppi.png');  
         game.load.image('pipe', 'src/assets/pipe.png'); 
 
@@ -30,6 +32,9 @@ var mainState = {
 
     create: function() { 
         game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        //background image
+        game.add.tileSprite(0,0,1280,720, 'background');
 
         //trying to define guppi with no luck
         var guppi = this.guppi;
@@ -77,6 +82,7 @@ var mainState = {
         // how big is yo wave
         waves.scale.setTo();
 
+        
 
     };
 
