@@ -2,6 +2,24 @@ var game = new Phaser.Game(1280, 720, Phaser.AUTO, "gameDiv");
 var score = 0;
 var scoreText;
 var rope;
+
+var titleState = {
+    preload: function() {
+        game.load.image('titleImage', 'src/assets/title.png');
+    },
+    
+    create: function(){
+        game.add.tileSprite(0,0,1280,720, 'titleImage');
+        var startLabel = game.add.text(640/1.75, 550, 'Press \'W\' to Start Game', {font: '50px Arial', fill: '#ffffff'});
+        var wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+        wKey.onDown.addOnce(this.startGame, this)
+    },
+    startGame: function(){
+        score = 0;
+        game.state.start('main');
+    },
+}
+
 var mainState = {
 
     preload: function() { 
@@ -212,6 +230,7 @@ function collectBurgers (guppi, burger) {
 
 }
 
+game.state.add('title', titleState);
 game.state.add('main', mainState);
 game.state.add('win', winState);
-game.state.start('main'); 
+game.state.start('title'); 
