@@ -80,6 +80,7 @@ var mainState = {
             var burger = burgers.create(bv * 100, Math.random(), 'burger');
             burger.body.gravity.y = 9;
             burger.body.bounce.y = 0.7 + Math.random() * 0.2;
+            burger.scale.setTo(Math.random());
              if (burger.angle < 20){
                  burger.angle += 1;  
                  }
@@ -93,7 +94,7 @@ var mainState = {
         for (var i = 0; i < 30; i++){
             points.push(new Phaser.Point(i * length, 0));
         }
-        rope = game.add.rope(50, this.game.world.centerY, 'snake', null, points);
+        let rope = game.add.rope(50, this.game.world.centerY, 'snake', null, points);
         rope.scale.set(0.5);
 
         rope.updateAnimation = function() {
@@ -165,7 +166,7 @@ var mainState = {
 
 };
 
-function collisionHandler(guppi, snake){
+function collisionHandler(guppi, wave){
     guppi.kill();
 }
 
